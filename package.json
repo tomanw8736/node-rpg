@@ -1,0 +1,23 @@
+{
+  "name": "toms-rpg",
+  "version": "1.0.0",
+  "description": "My third node.js project!",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomanw8736/node-rpg.git"
+  },
+  "author": "tomanw8736",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomanw8736/node-rpg/issues"
+  },
+  "homepage": "https://github.com/tomanw8736/node-rpg#readme",
+  "dependencies": {
+    "@inquirer/prompts": "^7.4.0"
+  }
+}
