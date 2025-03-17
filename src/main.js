@@ -4,9 +4,29 @@
 
 // imports
 import { select, input } from "@inquirer/prompts";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 import { Player } from "./classes/player.js";
 import { NPC } from "./classes/npc.js";
+
+
+// saving/loading stuff
+function saveGame(player) {
+    const data = JSON.stringify({ name: player.name, health: player.health, attack: player.attack });
+    writeFileSync('save.json', data);
+    console.log('Saved successfully!');
+}
+
+function loadGame() {
+    if (existsSync('save.json')) {
+        const data = readFileSync('save.json', 'utf8'); // file path + charset
+        const { name, health, attack } = JSON.parse(data);
+        console.log('Game Loaded Successfully!');
+        return new Player(name, health, attack);
+    }
+    console.log('No save found!');
+}
+
+
 
 // battle method
 // requires player arg (Player class)
@@ -40,7 +60,7 @@ async function battle(player, enemy) {
             // checks if enemy is still alive
             if (!enemy.isAlive()) {
                 console.log(`${enemy.name} has been killed!`);
-                break;
+                return;
             }
 
             // enemy attacks back at player
@@ -50,23 +70,51 @@ async function battle(player, enemy) {
             // checks if player is still alive
             if (!player.isAlive()) {
                 console.log(`${player.name} has been killed!`);
-                break;
+                return;
             }
         }
     }
 }
 
-// start game method
-async function runGame() {
-    console.clear();
+async function newGame() {
     const name = await input({
         message: 'Please enter a name!'
     })
-    const player = new Player(name, 100, 5);
-    console.log(`Welcome to my RPG ${player.name}!`);
+    return new Player(name, 100, 5);
+}
+
+// start game method
+async function runGame() {
+    var player;
+    console.clear();
+    const menuAction = await select({
+        message: 'Welcome! Please select an option:',
+        choices: [
+            {
+                name: 'Load Game',
+                value: 'loadGame',
+            },
+            {
+                name: 'New Game',
+                value: 'newGame',
+            },
+        ],
+    });
+
+    if (menuAction === 'loadGame') {
+        player = loadGame();
+
+        if (!player) {
+            player = await newGame();
+        }
+    } 
+    else {
+        player = await newGame();
+    }
 
     // test battle
     const enemy = new NPC('Goblin', 30, 5);
     await battle(player, enemy);
+    saveGame(player);
 }
 runGame();
