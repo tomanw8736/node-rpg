@@ -1,1 +1,1 @@
-{"name":"tom","health":50,"attack":5}
+{"name":"tom","health":100,"max_health":100,"attack":5,"level":1,"exp":240,"max_exp":250}
