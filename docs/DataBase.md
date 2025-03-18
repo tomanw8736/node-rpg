@@ -1,9 +1,7 @@
 <a name="module_database"></a>
 
-## database
-Database Module
-
-A module that handles the loading and management of game weapons from a JSON file.
+## DataBase
+Handles the loading and management of game weapons from a JSON file.
 
 
 * [database](#module_database)
@@ -13,13 +11,13 @@ A module that handles the loading and management of game weapons from a JSON fil
     * [~DataBase](#module_database..DataBase)
         * [new DataBase()](#new_module_database..DataBase_new)
         * [new DataBase(name)](#new_module_database..DataBase_new)
-    * [~dbLoad()](#module_database..dbLoad) ⇒ <code>Promise.&lt;void&gt;</code>
-    * [~dbPreLoad()](#module_database..dbPreLoad)
-    * [~dbPostLoad()](#module_database..dbPostLoad)
+    * [~dbLoad()](#module_database..dbLoad) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [~dbPreLoad()](#module_database..dbPreLoad) ⇒ <code>void</code>
+    * [~dbPostLoad()](#module_database..dbPostLoad) ⇒ <code>void</code>
 
 <a name="module_database..DataBase"></a>
 
-### database~DataBase
+### database.DataBase
 **Kind**: inner class of [<code>database</code>](#module_database)  
 
 * [~DataBase](#module_database..DataBase)
@@ -45,7 +43,7 @@ Create a new Database instance
 
 <a name="module_database..DataBase"></a>
 
-### database~DataBase
+### database.DataBase
 **Kind**: inner class of [<code>database</code>](#module_database)  
 
 * [~DataBase](#module_database..DataBase)
@@ -71,7 +69,7 @@ Create a new Database instance
 
 <a name="module_database..dbLoad"></a>
 
-### database~dbLoad() ⇒ <code>Promise.&lt;void&gt;</code>
+### database.dbLoad() ⇒ <code>Promise.&lt;Object&gt;</code>
 Main method that orchestrates the database loading process.
              Executes in three phases:
              1. Pre-load operations
@@ -79,21 +77,26 @@ Main method that orchestrates the database loading process.
              3. Post-load operations
 
 **Kind**: inner method of [<code>database</code>](#module_database)  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise that resolves to the weapons object  
 **Throws**:
 
-- <code>Error</code> If database loading fails
+- <code>Error</code> If database loading fails and cannot be handled
 
+**Example**  
+```js
+const gameDB = new DataBase('weapons');
+await gameDB.dbLoad();
+const sword = gameDB.weapons['sword1'];
+```
 <a name="module_database..dbPreLoad"></a>
 
-### database~dbPreLoad()
+### database.dbPreLoad() ⇒ <code>void</code>
 Executes preparatory steps before the main loading process.
-             Can be extended to include initialization logic, resource
-             allocation, or validation steps.
 
 **Kind**: inner method of [<code>database</code>](#module_database)  
 <a name="module_database..dbPostLoad"></a>
 
-### database~dbPostLoad()
+### database.dbPostLoad() ⇒ <code>void</code>
 Executes cleanup and finalization steps after the main
              loading process completes successfully.
 

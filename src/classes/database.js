@@ -1,13 +1,12 @@
 /**
  * Database Module
  * 
- * A module that handles the loading and management of game weapons from a JSON file.
- * 
  * @module database
+ * @description Handles the loading and management of game weapons from a JSON file.
  */
 
 import { Weapon } from "./weapon.js";
-import { promises as fs } from 'fs';
+import { promises as fs, existsSync } from 'fs';
 
 /**
  * Database class for managing game weapons
@@ -39,51 +38,24 @@ class DataBase {
      *              1. Pre-load operations
      *              2. Core loading logic
      *              3. Post-load operations
-     * @returns {Promise<void>}
-     * @throws {Error} If database loading fails
+     * @returns {Promise<Object>} A promise that resolves to the weapons object
+     * @throws {Error} If database loading fails and cannot be handled
+     * @example
+     * const gameDB = new DataBase('weapons');
+     * await gameDB.dbLoad();
+     * const sword = gameDB.weapons['sword1'];
      */
     async dbLoad() {
         this.dbPreLoad();
         
-        /**
-         * Core database loading implementation
-         * 
-         * Reads weapon data from JSON file, parses it,
-         * and instantiates Weapon objects for each entry.
-         */
         try {
-            // Read the weapons data file from the filesystem
-            const data = await fs.readFile('weapons.json', 'utf8');
-            const weaponsData = JSON.parse(data);
-
-            // Create weapon objects and store them in the weapons collection
-            for (const weaponID in weaponsData) {
-                if (weaponsData.hasOwnProperty(weaponID)) {
-                    const weaponData = weaponsData[weaponID];
-                    this.weapons[weaponID] = new Weapon(
-                        weaponID, 
-                        weaponData.name, 
-                        weaponData.attack
-                    );
-                }
-            }
+            await this.loadWeaponsFromFile();
         } catch (error) {
-            console.log('Error loading DataBase: ', error);
-            
-            /**
-             * Error handling
-             * 
-             * Currently re-throws the error, which prevents dbPostLoad()
-             * from executing if loading fails. Consider implementing
-             * more robust error handling strategies, such as:
-             * - Loading from a backup file
-             * - Creating an empty database
-             * - Attempting reconnection if it's a connection error
-             */
-            throw error;
+            await this.handleLoadError(error);
         }
 
         this.dbPostLoad();
+        return this.weapons;
     }
 
     /**
@@ -91,22 +63,15 @@ class DataBase {
      * 
      * @method dbPreLoad
      * @description Executes preparatory steps before the main loading process.
-     *              Can be extended to include initialization logic, resource
-     *              allocation, or validation steps.
+     * @returns {void}
      */
     dbPreLoad() {
         console.log('Loading DataBase!');
-        
-        /**
-         * Extension point for pre-loading operations
-         * 
-         * Potential operations to implement:
-         * - Clear existing cache
-         * - Set up timers or metrics for load operation
-         * - Prepare connection pools
-         * - Verify file existence
-         * - Lock resources
-         */
+        // checking if weapons.json exists
+        if (existsSync('weapons.json')) {
+            console.log('Weapons file exists!');
+        }
+        // This is an extension point for pre-loading operations
     }
 
     /**
@@ -115,20 +80,61 @@ class DataBase {
      * @method dbPostLoad
      * @description Executes cleanup and finalization steps after the main
      *              loading process completes successfully.
+     * @returns {void}
      */
     dbPostLoad() {
         console.log('DataBase Loaded!');
+        // This is an extension point for post-loading operations
+    }
+
+    /**
+     * Handle errors that occur during database loading
+     * 
+     * @async
+     * @method handleLoadError
+     * @description Processes errors that occur during the loading process and
+     *              takes appropriate actions based on error type.
+     * @param {Error} error - The error that occurred during loading
+     * @returns {Promise<void>}
+     * @private
+     */
+    async handleLoadError(error) {
+        console.log('Error loading DataBase: ', error);
+
+        if (error.code === 'ENOENT') {
+            console.log('Weapons file not found!');
+        } else if (error instanceof SyntaxError) {
+            console.log('Invalid JSON Format!');
+        }
+    }
+
+    /**
+     * Load weapons data from the JSON file
+     * 
+     * @async
+     * @method loadWeaponsFromFile
+     * @description Reads the weapons data file, parses it, and creates
+     *              Weapon objects for each entry.
+     * @returns {Promise<void>}
+     * @throws {Error} If file reading or parsing fails
+     * @private
+     */
+    async loadWeaponsFromFile() {
+        // Read the weapons data file from the filesystem
+        const data = await fs.readFile('weapons.json', 'utf8');
+        const weaponsData = JSON.parse(data);
         
-        /**
-         * Extension point for post-loading operations
-         * 
-         * Potential operations to implement:
-         * - Validate loaded data integrity
-         * - Build indices for efficient queries
-         * - Notify other system components that data is ready
-         * - Log loading statistics (time taken, items loaded)
-         * - Release locks
-         */
+        // Create weapon objects and store them in the weapons collection
+        for (const weaponID in weaponsData) {
+            if (weaponsData.hasOwnProperty(weaponID)) {
+                const weaponData = weaponsData[weaponID];
+                this.weapons[weaponID] = new Weapon(
+                    weaponID, 
+                    weaponData.name, 
+                    weaponData.attack
+                );
+            }
+        }
     }
 }
 

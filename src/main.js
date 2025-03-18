@@ -88,11 +88,7 @@ async function battle(player, enemy) {
             // Player attacks enemy
             enemy.health -= player.weapon.attack;
             
-            /**
-             * Bug: The code references player.attack which is not defined.
-             * It should likely be player.weapon.attack instead.
-             */
-            console.log(`${player.name} attacks ${enemy.name} dealing ${player.attack} damage!`);
+            console.log(`${player.name} attacks ${enemy.name} dealing ${player.weapon.attack} damage!`);
 
             // Check if enemy is still alive
             if (!enemy.isAlive()) {
@@ -112,11 +108,12 @@ async function battle(player, enemy) {
                 break;
             }
         }
-        
-        /**
-         * Note: The 'run' action does not have any implementation.
-         * This is a potential extension point for escape mechanics.
-         */
+
+        else if (action === 'run') {
+            mainMenu(player);
+            break;
+        }
+    
     }
 }
 
@@ -146,48 +143,42 @@ async function newGame(database) {
  * @returns {Promise<void>}
  */
 async function mainMenu(player) {
-    console.clear();
+    var isRunning = true;
+    while (isRunning) {
+        console.clear();
 
-    // Printing out player stats
-    player.showStats();
+        // Printing out player stats
+        player.showStats();
 
-    // Main menu options
-    const menuAction = await select({
-        message: 'Welcome home traveller!',
-        choices: [
-            {
-                name: 'Battle',
-                value: 'battle',
-            },
-            {
-                name: 'Exit',
-                value: 'exit',
-            },
-            {
-                name: 'Check Weapon',
-                value: 'checkWeapon',
-            },
-        ],
-    });
+        // Main menu options
+        const menuAction = await select({
+            message: 'Welcome home traveller!',
+            choices: [
+                {
+                    name: 'Battle',
+                    value: 'battle',
+                },
+                {
+                    name: 'Exit',
+                    value: 'exit',
+                },
+                {
+                    name: 'Check Weapon',
+                    value: 'checkWeapon',
+                },
+            ],
+        });
 
-    // Process menu selection
-    if (menuAction === 'battle') {
-        const goblin = new NPC('Goblin', 25, 2, 10);
-        await battle(player, goblin);
+        // Process menu selection
+        if (menuAction === 'battle') {
+            const goblin = new NPC('Goblin', 25, 2, 10);
+            await battle(player, goblin);
+        }
+        else if (menuAction === 'exit') {
+            saveGame(player);
+            isRunning = false;
+        }
     }
-    else if (menuAction === 'exit') {
-        saveGame(player);
-        process.exit();
-    }
-    else {
-        console.log(player.weapon);
-    }
-    
-    /**
-     * Note: The mainMenu function doesn't recursively call itself after
-     * showing the weapon or completing non-battle actions. This could lead
-     * to the game ending prematurely.
-     */
 }
 
 /**
@@ -233,12 +224,6 @@ async function runGame() {
     }
 
     await mainMenu(player);
-    
-    /**
-     * Note: After the initial mainMenu call, the game might end
-     * unless the mainMenu function is modified to continue the game loop.
-     * Consider adding a loop here or ensuring mainMenu always returns to itself.
-     */
 }
 
 // Start the game
