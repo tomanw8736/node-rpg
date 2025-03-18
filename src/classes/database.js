@@ -161,6 +161,13 @@ class DataBase {
       }
     }
   }
+
+  async dbReload() {
+    console.log('Reloading DataBase!');
+    await this.loadNPCFromFile();
+    await this.loadWeaponsFromFile();
+    console.log('DataBase Reloaded!');
+  }
 }
 
 export { DataBase };

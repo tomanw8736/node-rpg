@@ -29,7 +29,7 @@ class Player {
    * @param {Object|string} weapon - The player's equipped weapon
    * @param {number} money - The player's money
    */
-  constructor(name, health, max_health, level, exp, max_exp, weapon, money) {
+  constructor(name, health, max_health, level, exp, max_exp, weapon, money, inventory) {
     // Basic player information
     this.name = name;
 
@@ -45,6 +45,7 @@ class Player {
     // Equipment
     this.weapon = weapon;
     this.money = money;
+    this.inventory = inventory;
   }
 
   /**
@@ -80,6 +81,10 @@ class Player {
 
   giveMoney(amount) {
     this.money += amount;
+  }
+
+  addItem(item) {
+    this.inventory.push(item);
   }
 
   /**

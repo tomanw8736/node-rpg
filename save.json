@@ -1,1 +1,1 @@
-{"name":"Tom","health":20,"max_health":100,"level":1,"exp":16,"max_exp":250,"weapon":{"id":"weapon_sword","name":"Sword","attack":5,"value":250,"category":"weapon"},"money":0}
+{"name":"Tom","health":60,"max_health":100,"level":1,"exp":12,"max_exp":250,"weapon":{"id":"weapon_sword","name":"Sword","attack":5,"value":250,"category":"weapon"},"money":250,"inventory":[]}

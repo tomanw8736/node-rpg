@@ -10,10 +10,11 @@
 // Imports
 import { select, input } from "@inquirer/prompts";
 import { readFileSync, writeFileSync, existsSync } from "fs";
+
+// game imports
 import { Player } from "./classes/player.js";
 import { NPC } from "./classes/npc.js";
 import { DataBase } from "./classes/database.js";
-import { Store } from "./classes/shop.js";
 import { Utils } from "./classes/utils.js";
 
 const utils = new Utils("Utilities");
@@ -35,6 +36,7 @@ function saveGame(player) {
     max_exp: player.max_exp,
     weapon: player.weapon,
     money: player.money,
+    inventory: player.inventory
   });
   writeFileSync("save.json", data);
   console.log("Saved successfully!");
@@ -50,7 +52,7 @@ function saveGame(player) {
 function loadGame() {
   if (existsSync("save.json")) {
     const data = readFileSync("save.json", "utf8"); // file path + charset
-    const { name, health, max_health, level, exp, max_exp, weapon, money } =
+    const { name, health, max_health, level, exp, max_exp, weapon, money, inventory } =
       JSON.parse(data);
     console.log("Game Loaded Successfully!");
     return new Player(
@@ -61,7 +63,8 @@ function loadGame() {
       exp,
       max_exp,
       weapon,
-      money
+      money,
+      inventory
     );
   }
   console.log("No save found!");
@@ -153,7 +156,8 @@ async function newGame(database) {
     0,
     250,
     database.items["weapon_sword"],
-    250
+    250,
+    []
   );
 }
 
@@ -169,6 +173,7 @@ async function newGame(database) {
 async function mainMenu(player, database) {
   var isRunning = true;
   while (isRunning) {
+    await database.dbReload();
     console.clear();
 
     // Printing out player stats
@@ -187,6 +192,10 @@ async function mainMenu(player, database) {
           value: "exit",
         },
         {
+            name: "Check",
+            value: "check"
+        },
+        {
           name: "Open Store",
           value: "openStore",
         },
@@ -201,6 +210,9 @@ async function mainMenu(player, database) {
       isRunning = false;
     } else if (menuAction === "openStore") {
       await database.store.showStore(player);
+    } else if (menuAction === 'check') {
+        console.log(database.npcs['goblin']);
+        break;
     }
   }
 }
