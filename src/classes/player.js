@@ -27,8 +27,9 @@ class Player {
      * @param {number} exp - The player's current experience points
      * @param {number} max_exp - Experience points required for next level
      * @param {Object|string} weapon - The player's equipped weapon
+     * @param {number} money - The player's money
      */
-    constructor(name, health, max_health, level, exp, max_exp, weapon) {
+    constructor(name, health, max_health, level, exp, max_exp, weapon, money) {
         // Basic player information
         this.name = name;
         
@@ -43,6 +44,7 @@ class Player {
         
         // Equipment
         this.weapon = weapon;
+        this.money = money;
     }
 
     /**
@@ -113,6 +115,7 @@ class Player {
         console.log('------------------');
         console.log(`Player Name: ${this.name}`);
         console.log(`Player Level: ${this.level} (${this.exp}/${this.max_exp})`);
+        console.log(`Player Balance: ${this.money}`);
         console.log('------------------');
         console.log(`Health: ${this.health}/${this.max_health}`);
         console.log(`Weapon: ${this.weapon.name}`);

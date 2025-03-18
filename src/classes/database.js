@@ -5,6 +5,7 @@
  * @description Handles the loading and management of game weapons from a JSON file.
  */
 
+import { Store } from "./shop.js";
 import { Weapon } from "./weapon.js";
 import { promises as fs, existsSync } from 'fs';
 
@@ -26,6 +27,7 @@ class DataBase {
     constructor(name) {
         this.name = name;
         this.weapons = {};  // Object to store weapon instances indexed by weaponID
+        this.store = new Store('Weapon Store', this.weapons, this);
     }
 
     /**
@@ -67,8 +69,8 @@ class DataBase {
      */
     dbPreLoad() {
         console.log('Loading DataBase!');
-        // checking if weapons.json exists
-        if (existsSync('weapons.json')) {
+        // checking if items.json exists
+        if (existsSync('items.json')) {
             console.log('Weapons file exists!');
         }
         // This is an extension point for pre-loading operations
@@ -121,7 +123,7 @@ class DataBase {
      */
     async loadWeaponsFromFile() {
         // Read the weapons data file from the filesystem
-        const data = await fs.readFile('weapons.json', 'utf8');
+        const data = await fs.readFile('items.json', 'utf8');
         const weaponsData = JSON.parse(data);
         
         // Create weapon objects and store them in the weapons collection
@@ -131,7 +133,9 @@ class DataBase {
                 this.weapons[weaponID] = new Weapon(
                     weaponID, 
                     weaponData.name, 
-                    weaponData.attack
+                    weaponData.attack,
+                    weaponData.value,
+                    weaponData.category,
                 );
             }
         }

@@ -1,0 +1,14 @@
+{
+    "test_weapon": {
+        "name": "Test Weapon",
+        "attack": 10,
+        "value": 10000000,
+        "category": "weapon"
+    },
+    "weapon_sword": {
+        "name": "Sword",
+        "attack": 5,
+        "value": 250,
+        "category": "weapon"
+    }
+}

@@ -13,6 +13,8 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { Player } from "./classes/player.js";
 import { NPC } from "./classes/npc.js";
 import { DataBase } from "./classes/database.js";
+import { Store } from "./classes/shop.js";
+
 
 /**
  * Save the current game state
@@ -30,6 +32,7 @@ function saveGame(player) {
         exp: player.exp,
         max_exp: player.max_exp,
         weapon: player.weapon,
+        money: player.money
     });
     writeFileSync('save.json', data);
     console.log('Saved successfully!');
@@ -45,9 +48,9 @@ function saveGame(player) {
 function loadGame() {
     if (existsSync('save.json')) {
         const data = readFileSync('save.json', 'utf8'); // file path + charset
-        const { name, health, max_health, level, exp, max_exp, weapon } = JSON.parse(data);
+        const { name, health, max_health, level, exp, max_exp, weapon, money } = JSON.parse(data);
         console.log('Game Loaded Successfully!');
-        return new Player(name, health, max_health, level, exp, max_exp, weapon);
+        return new Player(name, health, max_health, level, exp, max_exp, weapon, money);
     }
     console.log('No save found!');
     // Note: This function implicitly returns undefined when no save is found
@@ -130,7 +133,7 @@ async function newGame(database) {
     const name = await input({
         message: 'Please enter a name!'
     });
-    return new Player(name, 100, 100, 1, 0, 250, database.weapons['weapon_sword']);
+    return new Player(name, 100, 100, 1, 0, 250, database.weapons['weapon_sword'], 250);
 }
 
 /**
@@ -142,13 +145,14 @@ async function newGame(database) {
  * @param {Player} player - The current player
  * @returns {Promise<void>}
  */
-async function mainMenu(player) {
+async function mainMenu(player, database) {
     var isRunning = true;
     while (isRunning) {
         console.clear();
 
         // Printing out player stats
         player.showStats();
+
 
         // Main menu options
         const menuAction = await select({
@@ -163,8 +167,8 @@ async function mainMenu(player) {
                     value: 'exit',
                 },
                 {
-                    name: 'Check Weapon',
-                    value: 'checkWeapon',
+                    name: 'Open Store',
+                    value: 'openStore',
                 },
             ],
         });
@@ -177,6 +181,9 @@ async function mainMenu(player) {
         else if (menuAction === 'exit') {
             saveGame(player);
             isRunning = false;
+        }
+        else if (menuAction === 'openStore') {
+            await database.store.showStore(player);
         }
     }
 }
@@ -223,7 +230,7 @@ async function runGame() {
         player = await newGame(database);
     }
 
-    await mainMenu(player);
+    await mainMenu(player, database);
 }
 
 // Start the game

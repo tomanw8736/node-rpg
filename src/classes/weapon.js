@@ -23,8 +23,10 @@ class Weapon {
      * @param {string} id - Unique identifier for the weapon
      * @param {string} name - Display name of the weapon
      * @param {number} attack - Attack power/damage value of the weapon
+     * @param {number} value - The sell/buy value of the weapon
+     * @param {string} category - The shop category of the weapon
      */
-    constructor(id, name, attack) {
+    constructor(id, name, attack, value, category) {
         /**
          * Unique identifier for the weapon
          * Used for database lookups and save/load operations
@@ -45,6 +47,19 @@ class Weapon {
          * @type {number}
          */
         this.attack = attack;
+
+        /**
+         * Buy/Sell cost of the weapon
+         * Used in the shop display and stats display
+         * @type {number}
+         */
+        this.value = value;
+
+        /**
+         * Shop category of the weapon
+         * @type {string}
+         */
+        this.category = category;
         
         /**
          * Extension point for additional weapon properties
