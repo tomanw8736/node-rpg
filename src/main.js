@@ -113,8 +113,7 @@ async function battle(database, player, enemy) {
       if (!utils.isAlive(enemy)) {
         console.log(`${enemy.name} has been killed!`);
         player.giveEXP(enemy.exp_reward);
-        mainMenu(player, database);
-        return;
+        return true;
       }
 
       // Enemy attacks back at player
