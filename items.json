@@ -1,9 +1,9 @@
 {
-    "test_weapon": {
-        "name": "Test Weapon",
-        "attack": 10,
-        "value": 10000000,
-        "category": "weapon"
+    "fists": {
+        "name": "Fists",
+        "attack": 2,
+        "value": 0,
+        "category": "starter"
     },
     "weapon_sword": {
         "name": "Sword",
