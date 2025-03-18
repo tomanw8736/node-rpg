@@ -1,0 +1,9 @@
+{
+    "goblin": {
+        "name": "Goblin",
+        "health": 25,
+        "attack": 5,
+        "exp_reward": 4,
+        "money_reward": 10
+    }
+}

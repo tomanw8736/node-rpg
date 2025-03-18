@@ -15,7 +15,7 @@
  *              have unique identifiers, display names, and attack values that
  *              determine their effectiveness in combat.
  */
-class Weapon {
+class Item {
     /**
      * Create a new Weapon instance
      * 
@@ -84,4 +84,4 @@ class Weapon {
      */
 }
 
-export { Weapon };
+export { Item };
