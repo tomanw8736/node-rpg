@@ -7,6 +7,7 @@ import { select, input } from "@inquirer/prompts";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { Player } from "./classes/player.js";
 import { NPC } from "./classes/npc.js";
+import { DataBase } from "./classes/database.js";
 
 
 // saving/loading stuff
@@ -162,4 +163,7 @@ async function runGame() {
 
     await mainMenu(player);
 }
-runGame();
+//runGame();
+
+const database = new DataBase('Game');
+database.dbLoad();
