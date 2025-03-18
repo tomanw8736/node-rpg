@@ -20,6 +20,7 @@ function saveGame(player) {
         level: player.level,
         exp: player.exp,
         max_exp: player.max_exp,
+        weapon: player.weapon,
     });
     writeFileSync('save.json', data);
     console.log('Saved successfully!');
@@ -28,9 +29,9 @@ function saveGame(player) {
 function loadGame() {
     if (existsSync('save.json')) {
         const data = readFileSync('save.json', 'utf8'); // file path + charset
-        const { name, health, max_health, attack, level, exp, max_exp } = JSON.parse(data);
+        const { name, health, max_health, attack, level, exp, max_exp, weapon } = JSON.parse(data);
         console.log('Game Loaded Successfully!');
-        return new Player(name, health, max_health, attack, level, exp, max_exp);
+        return new Player(name, health, max_health, attack, level, exp, max_exp, weapon);
     }
     console.log('No save found!');
 }
@@ -63,7 +64,7 @@ async function battle(player, enemy) {
 
         // if action is 'attack'
         if ( action === 'attack' ) {
-            enemy.health -= player.attack;
+            enemy.health -= player.weapon.attack;
             console.log(`${player.name} attacks ${enemy.name} dealing ${player.attack} damage!`);
 
             // checks if enemy is still alive
@@ -87,11 +88,11 @@ async function battle(player, enemy) {
     }
 }
 
-async function newGame() {
+async function newGame(database) {
     const name = await input({
         message: 'Please enter a name!'
     })
-    return new Player(name, 100, 100, 5, 1, 0, 250);
+    return new Player(name, 100, 100, 5, 1, 0, 250, database.weapons['weapon_sword']);
 }
 
 
@@ -115,7 +116,11 @@ async function mainMenu(player) {
             {
                 name: 'Exit',
                 value: 'exit',
-            }
+            },
+            {
+                name: 'Check Weapon',
+                value: 'checkWeapon',
+            },
         ],
     });
 
@@ -124,9 +129,12 @@ async function mainMenu(player) {
         const goblin = new NPC('Goblin', 25, 2, 10);
         await battle(player, goblin);
     }
-    else {
+    else if (menuAction === 'exit') {
         saveGame(player);
         process.exit();
+    }
+    else {
+        console.log(player.weapon);
     }
 }
 
@@ -134,6 +142,10 @@ async function mainMenu(player) {
 
 // start game method
 async function runGame() {
+    // db setup
+    const database = new DataBase('Game'); // making new DataBase object
+    await database.dbLoad(); // loading the database
+
     var player;
     console.clear();
     const menuAction = await select({
@@ -149,21 +161,22 @@ async function runGame() {
             },
         ],
     });
-
+    // if the player selects 'load game'
     if (menuAction === 'loadGame') {
-        player = loadGame();
+        player = loadGame(); // calling the loadGame() method
 
-        if (!player) {
-            player = await newGame();
+        if (!player) { // if there is no save
+            player = await newGame(database);
         }
     } 
-    else {
-        player = await newGame();
+    else if (menuAction === 'newGame') {
+        player = await newGame(database);
     }
 
     await mainMenu(player);
 }
-//runGame();
 
-const database = new DataBase('Game');
-database.dbLoad();
+runGame();
+//const database = new DataBase('Game'); // making new DataBase object
+//await database.dbLoad(); // loading the database
+//console.log(database.weapons['test_weapon'].name);

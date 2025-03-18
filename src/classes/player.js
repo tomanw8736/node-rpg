@@ -1,6 +1,6 @@
 // player class
 class Player {
-    constructor(name, health, max_health, attack, level, exp, max_exp) {
+    constructor(name, health, max_health, attack, level, exp, max_exp, weapon) {
         this.name = name; // player name
         this.health = health; // player health
         this.max_health = max_health; // max player health
@@ -10,6 +10,9 @@ class Player {
         this.level = level; // player level
         this.exp = exp; // player exp
         this.max_exp = max_exp; // max exp before level up
+        
+        // others
+        this.weapon = weapon; // player inventory
     }
 
     // returns a bool of whether or not

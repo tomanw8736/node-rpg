@@ -1,4 +1,5 @@
 import { Weapon } from "./weapon.js";
+import { promises as fs } from 'fs';
 
 // database shit
 class DataBase {
@@ -7,16 +8,33 @@ class DataBase {
         this.weapons = [];
     }
 
-    dbLoad() {
+    async dbLoad() {
        this.dbPreLoad();
        /*
         database loading code goes here
        */
-
+        try {
         // setting up weapons
-        const weapon_test = new Weapon('Test', 10);
+            const weapon_test = new Weapon( // test weapon
+                'test_weapon', // weapon id
+                'Test Weapon', // name
+                10 // damage
+            );
+            const weapon_sword = new Weapon(
+                'weapon_sword',
+                'Sword',
+                5
+            );
 
-        this.weapons.push(weapon_test);
+            // pushing weapons
+            this.weapons[weapon_test.id] = weapon_test;
+            this.weapons[weapon_sword.id] = weapon_sword;
+
+        } catch (error) {
+            console.log('Error loading DataBase: ', error);
+            // handle error goes here
+            throw error; // re-throw to prevent dbPostLoad() if the loading failed
+        }
 
       this.dbPostLoad();
     }
