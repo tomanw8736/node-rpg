@@ -1,1 +1,1 @@
-{"name":"TomDev","health":100,"max_health":100,"attack":5,"level":1,"exp":0,"max_exp":250,"weapon":{"id":"weapon_sword","name":"Sword","attack":5}}
+{"name":"Tom.dev","health":100,"max_health":100,"level":1,"exp":0,"max_exp":250,"weapon":{"id":"weapon_sword","name":"Sword","attack":5}}

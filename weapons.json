@@ -1,0 +1,10 @@
+{
+    "test_weapon": {
+        "name": "Test Weapon",
+        "attack": 10
+    },
+    "weapon_sword": {
+        "name": "Sword",
+        "attack": 5
+    }
+}

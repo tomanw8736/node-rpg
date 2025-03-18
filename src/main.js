@@ -16,7 +16,6 @@ function saveGame(player) {
         name: player.name,
         health: player.health,
         max_health: player.max_health,
-        attack: player.attack,
         level: player.level,
         exp: player.exp,
         max_exp: player.max_exp,
@@ -29,9 +28,9 @@ function saveGame(player) {
 function loadGame() {
     if (existsSync('save.json')) {
         const data = readFileSync('save.json', 'utf8'); // file path + charset
-        const { name, health, max_health, attack, level, exp, max_exp, weapon } = JSON.parse(data);
+        const { name, health, max_health, level, exp, max_exp, weapon } = JSON.parse(data);
         console.log('Game Loaded Successfully!');
-        return new Player(name, health, max_health, attack, level, exp, max_exp, weapon);
+        return new Player(name, health, max_health, level, exp, max_exp, weapon);
     }
     console.log('No save found!');
 }
@@ -92,7 +91,7 @@ async function newGame(database) {
     const name = await input({
         message: 'Please enter a name!'
     })
-    return new Player(name, 100, 100, 5, 1, 0, 250, database.weapons['weapon_sword']);
+    return new Player(name, 100, 100, 1, 0, 250, database.weapons['weapon_sword']);
 }
 
 
