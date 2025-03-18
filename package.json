@@ -19,5 +19,8 @@
   "homepage": "https://github.com/tomanw8736/node-rpg#readme",
   "dependencies": {
     "@inquirer/prompts": "^7.4.0"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^9.1.1"
   }
 }
