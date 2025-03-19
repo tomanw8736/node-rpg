@@ -142,7 +142,8 @@ class DataBase {
           itemData.name,
           itemData.attack,
           itemData.value,
-          itemData.category
+          itemData.category,
+          itemData.description,
         );
       }
     }

@@ -3,12 +3,37 @@
         "name": "Fists",
         "attack": 2,
         "value": 0,
-        "category": "starter"
+        "category": "starter",
+        "description": "Placeholder"
     },
-    "weapon_sword": {
-        "name": "Sword",
-        "attack": 5,
-        "value": 250,
-        "category": "weapon"
+
+    "weapon_wooden_sword": {
+        "name": "Wooden Sword",
+        "attack": 4,
+        "value": 25,
+        "category": "weapon",
+        "description": "Placeholder"
+    },
+    "weapon_copper_sword": {
+        "name": "Copper Sword",
+        "attack": 6,
+        "value": 35,
+        "category": "weapon",
+        "description": "Placeholder"
+    },
+    "weapon_steel_sword": {
+        "name": "Steel Sword",
+        "attack": 10,
+        "value": 75,
+        "category": "weapon",
+        "description": "Placeholder"
+    },
+
+    "potion_simple": {
+        "name": "Healing Potion",
+        "attack": 25,
+        "value": 5,
+        "category": "potions",
+        "description": "Heal yourself for 25 Health!"
     }
 }

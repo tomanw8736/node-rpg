@@ -1,3 +1,7 @@
+// Imports
+import { Item } from "./item.js";
+import { select, input } from "@inquirer/prompts";
+import { promises as fs, existsSync } from "fs";
 /**
  * Player Module
  *
@@ -105,6 +109,40 @@ class Player {
     addItem(item) {
       this.inventory.push(item);
     }
+
+    removeItem(item_index) {
+        this.inventory.splice(item_index, 1);
+    }
+
+    healPlayer(amount) {
+        this.health += amount;
+        if (this.health > this.max_health) {
+            this.health = this.max_health;
+        }
+    }
+
+    useItem(item_index) {
+        if (this.inventory[item_index].category === "potions") {
+            this.healPlayer(this.inventory[item_index].attack);
+            this.removeItem(item_index);
+        }
+    }
+
+    async showInventory() {
+        const action = await select({
+            message: "Pick an Item:",
+            choices: Object.entries(this.inventory)
+              .filter(([id, data]) => data.category === "potions")
+              .map(([id, data]) => ({
+                name: `${data.name} | ${data.description}`,
+                value: id,
+              })),
+        });
+        this.useItem(action);
+        return true;
+    }
+
+
   
     /**
      * Increase the player's level

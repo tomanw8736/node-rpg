@@ -8,6 +8,8 @@
 
 import { Player } from "./player.js";
 import { NPC } from "./npc.js";
+import { DataBase } from "./database.js";
+import { select, input } from "@inquirer/prompts";
 
 /**
  * Utility class for common game operations
@@ -43,6 +45,39 @@ class Utils {
    */
   isAlive(entity) {
     return entity.health > 0;
+  }
+
+  async adminMenu(player, database) {
+    console.clear();
+    console.log("------ ADMIN MENU ------");
+
+    const action = await select({
+      message: "Pick an option:",
+      choices: [
+        {
+          name: "Add Item",
+          value: "addItem",
+        },
+      ],
+    });
+
+    if (action === "addItem") {
+      await this.showItems(player, database);
+    }
+  }
+
+  async showItems(player, database) {
+    const action = await select({
+      message: "Pick an Item:",
+      choices: Object.entries(database.items)
+      .filter(([id, data]) => data.category !== "weapon")
+      .map(([id, data]) => ({
+        name: `${data.name} | ${data.description}`,
+        value: id,
+      })),
+    });
+    player.addItem(database.items[action]);
+    return true;
   }
 }
 

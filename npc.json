@@ -9,7 +9,7 @@
     "barbarian": {
         "name": "Barbarian",
         "health": 50,
-        "attack": 10,
+        "attack": 5,
         "exp_reward": 15,
         "money_reward": 50
     }

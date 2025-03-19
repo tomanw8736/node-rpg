@@ -57,11 +57,11 @@ async function battle(database, player, enemy) {
         // Check if player is still alive
         if (!player.isAlive()) {
           console.log(`${player.name} has been killed!`);
-          break;
+          player.health = 0;
+          return true;
         }
       } else if (action === "run") {
-        mainMenu(player, database);
-        break;
+        return true;
       }
     }
   }

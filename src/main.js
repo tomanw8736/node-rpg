@@ -12,6 +12,9 @@ import { Player } from "./classes/player.js";
 import { DataBase } from "./classes/database.js";
 import { battle } from "./methods/battle.js";
 import { saveGame, loadGame } from "./methods/save-load.js";
+import { Utils } from "./classes/utils.js";
+
+const utilities = new Utils('utilities')
 
 /**
  * Create a new player character
@@ -72,17 +75,21 @@ async function mainMenu(player, database) {
           value: "battle",
         },
         {
+            name: "Bag",
+            value: "openInventory"
+        },
+        {
+            name: "Open Store",
+            value: "openStore",
+        },
+        {
           name: "Exit",
           value: "exit",
         },
         {
-            name: "Check",
-            value: "check"
-        },
-        {
-          name: "Open Store",
-          value: "openStore",
-        },
+          name: "Admin Menu",
+          value: "adminMenu",
+        }
       ],
     });
 
@@ -94,9 +101,12 @@ async function mainMenu(player, database) {
       isRunning = false;
     } else if (menuAction === "openStore") {
       await database.store.showStore(player);
-    } else if (menuAction === 'check') {
-        console.log(database.npcs['goblin']);
-        break;
+    } else if (menuAction === "openInventory") {
+      await player.showInventory();
+      saveGame(player);
+    } else if (menuAction === "adminMenu") {
+      await utilities.adminMenu(player, database);
+      saveGame(player);
     }
   }
 }
@@ -156,7 +166,7 @@ runGame();
  * @private
  * @description Code used during development for testing database functionality.
  * Retained for reference but not used in production.
- * 
+ *
  * //const database = new DataBase('Game');
  * //await database.dbLoad();
  * //console.log(database.weapons['test_weapon'].name);

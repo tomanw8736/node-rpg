@@ -26,7 +26,7 @@ class Item {
      * @param {number} value - The sell/buy value of the weapon
      * @param {string} category - The shop category of the weapon
      */
-    constructor(id, name, attack, value, category) {
+    constructor(id, name, attack, value, category, description) {
         /**
          * Unique identifier for the weapon
          * Used for database lookups and save/load operations
@@ -60,6 +60,8 @@ class Item {
          * @type {string}
          */
         this.category = category;
+
+        this.description = description;
         
         /**
          * Extension point for additional weapon properties
