@@ -111,6 +111,8 @@ class Utils {
   /**
    * Selects a random enemy from the database's NPCs.
    * 
+   * @method pickEnemy
+   * @description Returns an NPC object from the list of npc's from database.
    * @param {Object} database - The game database containing NPCs
    * @returns {Object} A randomly selected enemy NPC object
    */
