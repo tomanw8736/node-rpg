@@ -9,9 +9,11 @@ Provides utility functions and helper methods for game mechanics
     * [~Utils](#module_utils..Utils)
         * [new Utils()](#new_module_utils..Utils_new)
         * [new Utils(name)](#new_module_utils..Utils_new)
+        * [.pickEnemy(database)](#module_utils..Utils+pickEnemy) ⇒ <code>Object</code>
     * [~Utils](#module_utils..Utils)
         * [new Utils()](#new_module_utils..Utils_new)
         * [new Utils(name)](#new_module_utils..Utils_new)
+        * [.pickEnemy(database)](#module_utils..Utils+pickEnemy) ⇒ <code>Object</code>
     * [~isAlive(entity)](#module_utils..isAlive) ⇒ <code>boolean</code>
     * [~adminMenu(player, database)](#module_utils..adminMenu) ⇒ <code>Promise.&lt;void&gt;</code>
     * [~showItems(player, database)](#module_utils..showItems) ⇒ <code>Promise.&lt;boolean&gt;</code>
@@ -24,6 +26,7 @@ Provides utility functions and helper methods for game mechanics
 * [~Utils](#module_utils..Utils)
     * [new Utils()](#new_module_utils..Utils_new)
     * [new Utils(name)](#new_module_utils..Utils_new)
+    * [.pickEnemy(database)](#module_utils..Utils+pickEnemy) ⇒ <code>Object</code>
 
 <a name="new_module_utils..Utils_new"></a>
 
@@ -40,6 +43,18 @@ Create a new Utils instance
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | The name identifier for this utilities instance |
+
+<a name="module_utils..Utils+pickEnemy"></a>
+
+#### utils.pickEnemy(database) ⇒ <code>Object</code>
+Selects a random enemy from the database's NPCs.
+
+**Kind**: instance method of [<code>Utils</code>](#module_utils..Utils)  
+**Returns**: <code>Object</code> - A randomly selected enemy NPC object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| database | <code>Object</code> | The game database containing NPCs |
 
 <a name="module_utils..Utils"></a>
 
@@ -49,6 +64,7 @@ Create a new Utils instance
 * [~Utils](#module_utils..Utils)
     * [new Utils()](#new_module_utils..Utils_new)
     * [new Utils(name)](#new_module_utils..Utils_new)
+    * [.pickEnemy(database)](#module_utils..Utils+pickEnemy) ⇒ <code>Object</code>
 
 <a name="new_module_utils..Utils_new"></a>
 
@@ -65,6 +81,18 @@ Create a new Utils instance
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | The name identifier for this utilities instance |
+
+<a name="module_utils..Utils+pickEnemy"></a>
+
+#### utils.pickEnemy(database) ⇒ <code>Object</code>
+Selects a random enemy from the database's NPCs.
+
+**Kind**: instance method of [<code>Utils</code>](#module_utils..Utils)  
+**Returns**: <code>Object</code> - A randomly selected enemy NPC object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| database | <code>Object</code> | The game database containing NPCs |
 
 <a name="module_utils..isAlive"></a>
 
