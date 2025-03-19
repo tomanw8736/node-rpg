@@ -110,10 +110,25 @@ class Player {
       this.inventory.push(item);
     }
 
+    /**
+     * Remove an item to the player's inventory
+     *
+     * @method removeItem
+     * @description Removes the specified item to the player's inventory collection.
+     * @param {Number} item_index - The item to remove to the inventory
+     * @returns {void}
+     */
     removeItem(item_index) {
         this.inventory.splice(item_index, 1);
     }
 
+    /**
+     * 
+     * @method healPlayer
+     * @description Heals the player by the specified amount.
+     * @param {Number} amount - The amount to heal the player by
+     * @returns {void}
+     */
     healPlayer(amount) {
         this.health += amount;
         if (this.health > this.max_health) {
@@ -121,6 +136,12 @@ class Player {
         }
     }
 
+    /**
+     * @method useItem
+     * @description Applies an effect based off the item type and removes it from the inventory.
+     * @param {Number} item_index 
+     * @returns {void}
+     */
     useItem(item_index) {
         if (this.inventory[item_index].category === "potions") {
             this.healPlayer(this.inventory[item_index].attack);
@@ -128,6 +149,11 @@ class Player {
         }
     }
 
+    /**
+     * @method showInventory
+     * @description Shows all items in the inventory and allows the user to select and use an item
+     * @returns {boolean}
+     */
     async showInventory() {
         const action = await select({
             message: "Pick an Item:",

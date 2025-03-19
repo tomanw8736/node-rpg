@@ -47,6 +47,18 @@ class Utils {
     return entity.health > 0;
   }
 
+  /**
+   * Display the administrative menu
+   *
+   * @method adminMenu
+   * @description Presents an admin interface with options to modify game state
+   * @param {Player} player - The player instance to modify
+   * @param {DataBase} database - The game database containing items and other data
+   * @returns {Promise<void>} A promise that resolves when menu interaction is complete
+   * @example
+   * const utils = new Utils('AdminUtils');
+   * await utils.adminMenu(currentPlayer, gameDatabase);
+   */
   async adminMenu(player, database) {
     console.clear();
     console.log("------ ADMIN MENU ------");
@@ -66,6 +78,22 @@ class Utils {
     }
   }
 
+  /**
+   * Display and select items to add to player inventory
+   *
+   * @method showItems
+   * @description Presents a selection menu of available non-weapon items and adds
+   *              the selected item to the player's inventory
+   * @param {Player} player - The player to receive the selected item
+   * @param {DataBase} database - The database containing item definitions
+   * @returns {Promise<boolean>} A promise that resolves to true when an item has been added
+   * @example
+   * const utils = new Utils('ItemUtils');
+   * const success = await utils.showItems(currentPlayer, gameDatabase);
+   * if (success) {
+   *   console.log('Item added successfully');
+   * }
+   */
   async showItems(player, database) {
     const action = await select({
       message: "Pick an Item:",

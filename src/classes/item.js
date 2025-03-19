@@ -20,22 +20,23 @@ class Item {
      * Create a new Weapon instance
      * 
      * @constructor
-     * @param {string} id - Unique identifier for the weapon
-     * @param {string} name - Display name of the weapon
-     * @param {number} attack - Attack power/damage value of the weapon
-     * @param {number} value - The sell/buy value of the weapon
-     * @param {string} category - The shop category of the weapon
+     * @param {string} id - Unique identifier for the item
+     * @param {string} name - Display name of the item
+     * @param {number} attack - Attack power/damage value of the item
+     * @param {number} value - The sell/buy value of the item
+     * @param {string} category - The shop category of the item
+     * @param {string} description - The description of the item
      */
     constructor(id, name, attack, value, category, description) {
         /**
-         * Unique identifier for the weapon
+         * Unique identifier for the item
          * Used for database lookups and save/load operations
          * @type {string}
          */
         this.id = id;
         
         /**
-         * Display name of the weapon
+         * Display name of the item
          * Used in user interface and combat messages
          * @type {string}
          */
@@ -43,24 +44,28 @@ class Item {
         
         /**
          * Attack power/damage value
-         * Determines how much damage the weapon deals in combat
+         * Determines how much the effect will do
          * @type {number}
          */
         this.attack = attack;
 
         /**
-         * Buy/Sell cost of the weapon
+         * Buy/Sell cost of the item
          * Used in the shop display and stats display
          * @type {number}
          */
         this.value = value;
 
         /**
-         * Shop category of the weapon
+         * Shop category of the item
          * @type {string}
          */
         this.category = category;
 
+        /**
+         * Description of the item
+         * @type {string}
+         */
         this.description = description;
         
         /**
@@ -68,7 +73,6 @@ class Item {
          * 
          * Potential properties to implement:
          * - durability: Weapon condition/uses remaining
-         * - type: Category of weapon (melee, ranged, etc.)
          * - rarity: Common, uncommon, rare, etc.
          * - special effects: Critical hit chance, elemental damage, etc.
          * - requirements: Level or stats needed to equip
