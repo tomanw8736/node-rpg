@@ -95,7 +95,8 @@ async function mainMenu(player, database) {
 
     // Process menu selection
     if (menuAction === "battle") {
-      await battle(database, player, database.npcs["barbarian"]);
+      const enemy = utilities.pickEnemy(database)
+      await battle(database, player, enemy);
     } else if (menuAction === "exit") {
       saveGame(player);
       isRunning = false;

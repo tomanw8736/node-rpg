@@ -107,6 +107,18 @@ class Utils {
     player.addItem(database.items[action]);
     return true;
   }
+
+  /**
+   * Selects a random enemy from the database's NPCs.
+   * 
+   * @param {Object} database - The game database containing NPCs
+   * @returns {Object} A randomly selected enemy NPC object
+   */
+  pickEnemy(database) {
+    const enemies = Object.values(database.npcs);
+    const randomIndex = Math.floor(Math.random() * enemies.length);
+    return enemies[randomIndex];
+  }
 }
 
 export { Utils };
