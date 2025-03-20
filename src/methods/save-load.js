@@ -12,7 +12,7 @@ import { Player } from "../classes/player.js";
 function loadGame() {
     if (existsSync("save.json")) {
       const data = readFileSync("save.json", "utf8"); // file path + charset
-      const { name, health, max_health, level, exp, max_exp, weapon, money, inventory } =
+      const { name, health, max_health, level, exp, max_exp, weapon, money, inventory, armor } =
         JSON.parse(data);
       console.log("Game Loaded Successfully!");
       return new Player(
@@ -24,7 +24,8 @@ function loadGame() {
         max_exp,
         weapon,
         money,
-        inventory
+        inventory,
+        armor
       );
     }
     console.log("No save found!");
@@ -48,7 +49,8 @@ function saveGame(player) {
       max_exp: player.max_exp,
       weapon: player.weapon,
       money: player.money,
-      inventory: player.inventory
+      inventory: player.inventory,
+      armor: player.armor,
     });
     writeFileSync("save.json", data);
     console.log("Saved successfully!");

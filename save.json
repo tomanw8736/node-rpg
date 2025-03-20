@@ -1,1 +1,1 @@
-{"name":"Tom","health":0,"max_health":100,"level":1,"exp":0,"max_exp":250,"weapon":{"id":"fists","name":"Fists","attack":2,"value":0,"category":"starter","description":"Placeholder"},"money":250,"inventory":[]}
+{"name":"tom","health":33,"max_health":100,"level":1,"exp":0,"max_exp":250,"weapon":{"id":"fists","name":"Fists","attack":2,"value":0,"category":"starter","description":"Placeholder"},"money":250,"inventory":[],"armor":{"id":"armor_wooden","name":"Wooden Armor","attack":5,"value":50,"category":"armor","description":"Placeholder"}}

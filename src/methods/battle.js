@@ -12,7 +12,7 @@ const utils = new Utils('Utilities');
  * @param {NPC} enemy - The enemy character
  * @returns {Promise<void>}
  */
-async function battle(database, player, enemy) {
+async function battle(utilities, player, enemy) {
     while (player.isAlive() && utils.isAlive(enemy)) {
       console.clear();
       console.log(`Enemy Name: ${enemy.name}`);
@@ -49,7 +49,8 @@ async function battle(database, player, enemy) {
         }
   
         // Enemy attacks back at player
-        player.health -= enemy.attack;
+        const enemy_attack = utilities.calculateDamage(enemy.attack, player.armor.attack);
+        player.health -= enemy_attack;
         console.log(
           `${enemy.name} attacks ${player.name} dealing ${enemy.attack} damage!`
         );

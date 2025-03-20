@@ -121,6 +121,11 @@ class Utils {
     const randomIndex = Math.floor(Math.random() * enemies.length);
     return enemies[randomIndex];
   }
+
+  calculateDamage(attack, armor) {
+    const damage = Math.floor(attack * (100 / (100 + armor)));
+    return damage;
+  }
 }
 
 export { Utils };

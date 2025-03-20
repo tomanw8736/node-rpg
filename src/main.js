@@ -41,7 +41,8 @@ async function newGame(database) {
     250,
     database.items["fists"],
     250,
-    []
+    [],
+    database.items["armor_wooden"]
   );
 }
 
@@ -96,7 +97,7 @@ async function mainMenu(player, database) {
     // Process menu selection
     if (menuAction === "battle") {
       const enemy = utilities.pickEnemy(database)
-      await battle(database, player, enemy);
+      await battle(utilities, player, enemy);
     } else if (menuAction === "exit") {
       saveGame(player);
       isRunning = false;
@@ -108,6 +109,7 @@ async function mainMenu(player, database) {
     } else if (menuAction === "adminMenu") {
       await utilities.adminMenu(player, database);
       saveGame(player);
+      stop;
     }
   }
 }

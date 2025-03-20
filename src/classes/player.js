@@ -32,10 +32,11 @@ class Player {
      * @param {Object} weapon - The player's equipped weapon
      * @param {number} money - The player's currency amount
      * @param {Array} inventory - The player's collection of items
+     * @param {Object} armor - The player's equipped armor
      * @example
      * const player = new Player("Hero", 100, 100, 1, 0, 250, fists, 100, []);
      */
-    constructor(name, health, max_health, level, exp, max_exp, weapon, money, inventory) {
+    constructor(name, health, max_health, level, exp, max_exp, weapon, money, inventory, armor) {
       // Basic player information
       this.name = name;
   
@@ -50,6 +51,7 @@ class Player {
   
       // Equipment
       this.weapon = weapon;
+      this.armor = armor;
       this.money = money;
       this.inventory = inventory;
     }
@@ -211,8 +213,8 @@ class Player {
       console.log(`Player Balance: ${this.money}`);
       console.log("------------------");
       console.log(`Health: ${this.health}/${this.max_health}`);
-      //console.log(this.weapon);
       console.log(`Weapon: ${this.weapon.name}`);
+      console.log(`Armor: ${this.armor.name}`);
       console.log("------------------");
     }
   }

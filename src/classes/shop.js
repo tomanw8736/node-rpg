@@ -40,24 +40,36 @@ class Store {
           name: "Weapons",
           value: "weapons",
         },
+        {
+          name: "Potions",
+          value: "potions",
+        },
+        {
+          name: "Armor",
+          value: "armor",
+        },
       ],
     });
     if (action === "weapons") {
-      await this.showWeapons(player);
+      await this.showItems(player, "weapon");
+    } else if (action === "potions") {
+      await this.showItems(player, "potions");
+    } else if (action === "armor") {
+      await this.showItems(player, "armor");
     }
   }
 
   /**
-   * Displays available weapons and handles weapon selection.
+   * Displays available items and handles item selection.
    * @async
    * @param {Object} player - The player object interacting with the store.
    * @returns {Promise<void>}
    */
-  async showWeapons(player) {
+  async showItems(player, category) {
     const action = await select({
       message: "Pick an Item:",
       choices: Object.entries(this.items)
-        .filter(([id, data]) => data.category === "weapon")
+        .filter(([id, data]) => data.category === category)
         .map(([id, data]) => ({
           name: `${data.name} | $${data.value}`,
           value: id,
@@ -78,7 +90,13 @@ class Store {
   async buyItem(item_id, player) {
     if (player.money >= this.database.items[item_id].value) {
       player.money -= this.database.items[item_id].value;
-      player.weapon = this.database.items[item_id];
+      if (this.database.items[item_id].category === "weapon") {
+        player.weapon = this.database.items[item_id];
+      } else if (this.database.items[item_id].category === "potions") {
+        player.addItem(this.database.items[item_id]);
+      } else if (this.database.items[item_id].category === "armor") {
+        player.armor = this.database.items[item_id];
+      }
     }
   }
 }

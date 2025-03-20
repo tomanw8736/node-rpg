@@ -24,7 +24,21 @@
     "weapon_steel_sword": {
         "name": "Steel Sword",
         "attack": 10,
-        "value": 75,
+        "value": 100,
+        "category": "weapon",
+        "description": "Placeholder"
+    },
+    "weapon_radio_signals": {
+        "name": "Radio Signals",
+        "attack": 15,
+        "value": 150,
+        "category": "weapon",
+        "description": "Placeholder"
+    },
+    "weapon_bubblegum_slingshot": {
+        "name": "Bubbleshot",
+        "attack": 25,
+        "value": 250,
         "category": "weapon",
         "description": "Placeholder"
     },
@@ -35,5 +49,20 @@
         "value": 5,
         "category": "potions",
         "description": "Heal yourself for 25 Health!"
+    },
+    "potion_medium": {
+        "name": "Extra Healing Potion",
+        "attack": 100,
+        "value": 50,
+        "category": "potions",
+        "description": "Heal yourself for 100 Health!"
+    },
+
+    "armor_wooden": {
+        "name": "Wooden Armor",
+        "attack": 5,
+        "value": 50,
+        "category": "armor",
+        "description": "Placeholder"
     }
 }

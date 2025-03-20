@@ -1,9 +1,16 @@
 {
+    "slime": {
+        "name": "Slime",
+        "health": 10,
+        "attack": 2,
+        "exp_reward": 5,
+        "money_reward": 5
+    },
     "goblin": {
         "name": "Goblin",
         "health": 25,
         "attack": 5,
-        "exp_reward": 4,
+        "exp_reward": 10,
         "money_reward": 10
     },
     "barbarian": {
@@ -12,5 +19,12 @@
         "attack": 5,
         "exp_reward": 15,
         "money_reward": 50
+    },
+    "armored_barbarian": {
+        "name": "Armored Barbarian",
+        "health": 100,
+        "attack": 10,
+        "exp_reward": 75,
+        "money_reward": 100
     }
 }
