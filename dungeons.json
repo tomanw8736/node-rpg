@@ -1,0 +1,8 @@
+{
+    "test_dungeon": {
+        "enemies": [
+            "goblin"
+        ],
+        "money_reward": 500
+    }
+}

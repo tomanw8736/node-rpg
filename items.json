@@ -6,6 +6,13 @@
         "category": "starter",
         "description": "Placeholder"
     },
+    "armor_none": {
+        "name": "No Armor",
+        "attack": 0,
+        "value": 0,
+        "category": "starter",
+        "description": "Placeholder"
+    },
 
     "weapon_wooden_sword": {
         "name": "Wooden Sword",

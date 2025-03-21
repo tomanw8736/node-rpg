@@ -13,8 +13,11 @@ import { DataBase } from "./classes/database.js";
 import { battle } from "./methods/battle.js";
 import { saveGame, loadGame } from "./methods/save-load.js";
 import { Utils } from "./classes/utils.js";
+import { Dungeon } from "./classes/dungeon.js";
 
-const utilities = new Utils('utilities')
+const utilities = new Utils('utilities');
+// test dungeon
+const test_dungeon = new Dungeon("test_dungeon");
 
 /**
  * Create a new player character
@@ -42,7 +45,7 @@ async function newGame(database) {
     database.items["fists"],
     250,
     [],
-    database.items["armor_wooden"]
+    database.items["armor_none"]
   );
 }
 
@@ -74,6 +77,10 @@ async function mainMenu(player, database) {
         {
           name: "Battle",
           value: "battle",
+        },
+        {
+          name: "Dungeons",
+          value: "dungeons"
         },
         {
             name: "Bag",
@@ -110,6 +117,9 @@ async function mainMenu(player, database) {
       await utilities.adminMenu(player, database);
       saveGame(player);
       stop;
+    } else if (menuAction === "dungeons") {
+      await test_dungeon.loadDungeon();
+      await test_dungeon.startDungeon(database);
     }
   }
 }
