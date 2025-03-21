@@ -13,11 +13,10 @@ import { DataBase } from "./classes/database.js";
 import { battle } from "./methods/battle.js";
 import { saveGame, loadGame } from "./methods/save-load.js";
 import { Utils } from "./classes/utils.js";
-import { Dungeon } from "./classes/dungeon.js";
+import { DungeonHandler } from "./classes/dungeon.js";
 
 const utilities = new Utils('utilities');
-// test dungeon
-const test_dungeon = new Dungeon("test_dungeon");
+let dungeons;
 
 /**
  * Create a new player character
@@ -118,8 +117,8 @@ async function mainMenu(player, database) {
       saveGame(player);
       stop;
     } else if (menuAction === "dungeons") {
-      await test_dungeon.loadDungeon();
-      await test_dungeon.startDungeon(database);
+      await dungeons.loadDungeons();
+      await dungeons.showDungeons(database);
     }
   }
 }
@@ -166,7 +165,7 @@ async function runGame() {
   } else if (menuAction === "newGame") {
     player = await newGame(database);
   }
-
+  dungeons = new DungeonHandler(utilities, database, player);
   await mainMenu(player, database);
 }
 

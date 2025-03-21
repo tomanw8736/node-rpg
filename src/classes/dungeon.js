@@ -3,29 +3,53 @@ import { Item } from "./item.js";
 import { promises as fs, existsSync } from "fs";
 import { NPC } from "./npc.js";
 import { battle } from "../methods/battle.js";
+import { select } from "@inquirer/prompts";
 
-class Dungeon {
-    constructor(id) {
-        this.id = id;
-        this.enemies = [];
-        this.money_reward = 0;
+class DungeonHandler {
+    constructor(utilities, database, player) {
+        this.utilities = utilities;
+        this.database = database;
+        this.player = player;
+        this.dungeons = [];
     }
 
-    async loadDungeon() {
+    async loadDungeons() {
         const data = await fs.readFile("dungeons.json", "utf8");
         const dungeonsData = JSON.parse(data);
 
-        this.enemies = dungeonsData[this.id].enemies;
-        this.money_reward = dungeonsData[this.id].money_reward;
+        this.dungeons = dungeonsData;
 
-        console.log(`Loaded Dungeon: ${this.id}!`);
+        console.log(`Loaded Dungeons!`);
     }
 
-    async startDungeon(database) {
-        
+    async startDungeon(dungeon) {
+        console.log(dungeon);
+        for (const enemy of dungeon.enemies) {
+            await battle(
+                this.utilities,
+                this.player,
+                this.database.npcs[enemy],
+                true,
+                dungeon.name
+            );
+        }
+        this.player.giveMoney(dungeon.money_reward);
         return true;
+    }
+
+    async showDungeons() {
+        const action = await select({
+            message: "Pick a Dungeon:",
+            choices: Object.entries(this.dungeons)
+            .map(([id, data]) => ({
+                name: `${data.name}`,
+                value: id,
+            }))
+        });
+
+        await this.startDungeon(this.dungeons[action]);
     }
 
 }
 
-export { Dungeon };
+export { DungeonHandler };

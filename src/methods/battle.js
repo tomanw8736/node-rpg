@@ -12,9 +12,12 @@ const utils = new Utils('Utilities');
  * @param {NPC} enemy - The enemy character
  * @returns {Promise<void>}
  */
-async function battle(utilities, player, enemy) {
-    while (player.isAlive() && utils.isAlive(enemy)) {
+async function battle(utilities, player, enemy, is_dungeon=false, dungeon_name="") {
+    while (utils.isAlive(player) && utils.isAlive(enemy)) {
       console.clear();
+      if (is_dungeon) {
+        console.log(`Dungeon Name: ${dungeon_name}`);
+      }
       console.log(`Enemy Name: ${enemy.name}`);
       console.log(`Enemy Health: ${enemy.health}`);
       const action = await select({
@@ -56,7 +59,7 @@ async function battle(utilities, player, enemy) {
         );
   
         // Check if player is still alive
-        if (!player.isAlive()) {
+        if (!utils.isAlive(player)) {
           console.log(`${player.name} has been killed!`);
           player.health = 0;
           return true;

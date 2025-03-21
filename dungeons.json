@@ -1,8 +1,26 @@
 {
     "test_dungeon": {
+        "name": "Test Dungeon",
         "enemies": [
             "goblin"
         ],
         "money_reward": 500
+    },
+    "test_dungeon2": {
+        "name": "Test Dungeon 2",
+        "enemies": [
+            "goblin",
+            "barbarian"
+        ],
+        "money_reward": 1000
+    },
+    "test_dungeon3": {
+        "name": "Test Dungeon 3",
+        "enemies": [
+            "goblin",
+            "barbarian",
+            "armored_barbarian"
+        ],
+        "money_reward": 5000
     }
 }
